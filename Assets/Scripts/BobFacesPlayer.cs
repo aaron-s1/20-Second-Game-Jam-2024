@@ -13,29 +13,47 @@ public class BobFacesPlayer : MonoBehaviour
     Vector3 targetPos;
     Vector3 targetRotation;
 
+    Vector3 originalJawPos;
+    Vector3 originalSelfPos;
+    Vector3 originalSelfRotation;
+
+    public Transform testFood;
+
     void Awake()
     {
         anim = GetComponent<Animator>();
-        // StartCoroutine(FacePlayer());
+        originalSelfPos = transform.position;
+        originalSelfRotation = transform.eulerAngles;
+        originalJawPos = jaw.transform.localPosition;
     }
 
-    void Start()
-    {
-        RotateHead();
-    }
 
-    void RotateHead()
+    public IEnumerator StareAtPlayer()
     {
-        // anim.enabled = false;
+        anim.enabled = false;
+        Destroy(GetComponent<BobRotates>());        
+        transform.eulerAngles = originalSelfRotation;
+
         targetRotation = new Vector3 (self.transform.rotation.x, self.transform.rotation.y + 70, self.transform.rotation.z);
-        StartCoroutine(RotateObj(self, targetRotation, 1f, false));
+        yield return StartCoroutine(RotateObj(self, targetRotation, 1f, false));
+
+        // return head to original pos
+        targetPos = originalSelfPos;
+        StartCoroutine(MoveObj(jaw, originalSelfPos, 0, true));
     }
 
-    void OpenMouth()
+    IEnumerator OpenMouth()
     {
         targetPos = new Vector3 (jaw.transform.localPosition.x, jaw.transform.localPosition.y - 0.3f, jaw.transform.localPosition.z + 0.01f);
-        StartCoroutine(MoveObj(jaw, targetPos, 1f, true));
+        // play some sound effect here.
+        yield return StartCoroutine(MoveObj(jaw, targetPos, 1f, true));
+
+        // close mouth.
+        targetPos = originalJawPos;
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(MoveObj(jaw, originalJawPos, 1f, true));
     }
+    
 
     public IEnumerator FacePlayer()
     {        
@@ -76,7 +94,7 @@ public class BobFacesPlayer : MonoBehaviour
             obj.transform.eulerAngles = destination;
         // anim.enabled = true;
 
-        OpenMouth();
+        StartCoroutine(OpenMouth());
     }
 
     IEnumerator MoveObj(GameObject obj, Vector3 destination, float duration, bool moveLocal = false)

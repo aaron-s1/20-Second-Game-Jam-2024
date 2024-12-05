@@ -1,1 +1,10 @@
 // Fill out later
+
+"Hijacker" by 'Dmitriy Poskrebyshev'  {used for player}  
+Source: (https://assetstore.unity.com/packages/3d/characters/humanoids/hijacker-187550)  
+
+"Living Birds" by 'Dinopunch'  
+Source: (https://assetstore.unity.com/packages/3d/characters/animals/birds/living-birds-15649)  
+
+"Simple Particles FX : Toon Effects" by Indian Ocean Assets  
+Source: (https://assetstore.unity.com/packages/vfx/particles/simple-particles-fx-toon-effects-244171)  

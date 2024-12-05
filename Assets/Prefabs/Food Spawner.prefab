@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6937818198910431608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6937818198910431607}
+  - component: {fileID: 6937818198910431606}
+  m_Layer: 0
+  m_Name: Food Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6937818198910431607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6937818198910431608}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6937818198910431606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6937818198910431608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8adc3b9a68c584fbdf66a484ffb90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseFoodPrefab: {fileID: 9150305173676953792, guid: 62eee90a721d9834fa55491cbea57597, type: 3}
+  badFoodSprites:
+  - {fileID: 21300000, guid: 3a25bc8660eecd640b18c00d7ac25d39, type: 2}
+  - {fileID: 21300000, guid: b8b479e536693224d9019175b7b7b2cf, type: 2}
+  - {fileID: 21300000, guid: 53b723c56eceb534195364e5335b400e, type: 2}
+  - {fileID: 21300000, guid: cdf7afac9ad646e4b99a970e262a1380, type: 2}
+  - {fileID: 21300000, guid: 9979634348a30a849a1a71797cfb55ba, type: 2}
+  - {fileID: 21300000, guid: 9440f87095a568e45aa1834b3b9b725e, type: 2}
+  - {fileID: 21300000, guid: 5c0679f5301ca0a4eb534726b1e1ea04, type: 2}
+  - {fileID: 21300000, guid: 63ac61b120ee1a640aac96fb2e6498b3, type: 2}
+  goodFoodSprites:
+  - {fileID: 21300000, guid: db729e18bb178f344ab81e95586ec394, type: 2}
+  - {fileID: 21300000, guid: b4b577080d3c7594c85725c21fb52c1d, type: 2}
+  - {fileID: 21300000, guid: df6b4e0faa4eb2645964033a18026a8f, type: 2}
+  - {fileID: 21300000, guid: ebd18631cbc2f0245a4171a364c3fb0e, type: 2}
+  - {fileID: 21300000, guid: f962f15c7f0a2fc4190f759c82ad7ed4, type: 2}
+  - {fileID: 21300000, guid: 80aafdc834419e448909fb3667a9b287, type: 2}
+  - {fileID: 21300000, guid: c71ea3cdba2c0194685c5fc097cc8be0, type: 2}
+  - {fileID: 21300000, guid: 400fb66587bb62548b70ea3ae67cc706, type: 2}

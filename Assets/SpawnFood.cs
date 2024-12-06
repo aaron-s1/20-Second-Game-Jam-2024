@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class SpawnFood : MonoBehaviour
 {
+    public static SpawnFood instance;
+
     float spawnRate = 1.5f;
     [SerializeField] GameObject baseFoodPrefab;
     [SerializeField] List<Sprite> badFoodSprites;
@@ -13,8 +15,14 @@ public class SpawnFood : MonoBehaviour
 
     private bool badFoodTime = true; // start with a bad food
 
-    // void Start() =>
-        // StartSpawns();
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+    }
+
 
     public void StartSpawns() =>
         InvokeRepeating("Spawn", 0, spawnRate);

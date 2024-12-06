@@ -18,7 +18,5 @@ public class StartGame : MonoBehaviour
         secondsCountUI.SetActive(true);
         player.SetActive(true);
         StartCoroutine(player.GetComponent<BobFacesPlayer>().StareAtPlayer());
-
-        
     }    
 }

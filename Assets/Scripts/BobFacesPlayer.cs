@@ -39,7 +39,8 @@ public class BobFacesPlayer : MonoBehaviour
 
         // return head to original pos
         targetPos = originalSelfPos;
-        StartCoroutine(MoveObj(jaw, originalSelfPos, 0, true));
+
+        StartCoroutine(MoveObj(jaw, originalSelfPos, 0, true));        
     }
 
     IEnumerator OpenMouth()
@@ -51,7 +52,9 @@ public class BobFacesPlayer : MonoBehaviour
         // close mouth.
         targetPos = originalJawPos;
         yield return new WaitForSeconds(2f);
-        StartCoroutine(MoveObj(jaw, originalJawPos, 1f, true));
+        yield return StartCoroutine(MoveObj(jaw, originalJawPos, 1f, true));
+
+        SpawnFood.instance.StartSpawns();
     }
     
 

@@ -6,24 +6,23 @@ using Unity.VisualScripting;
 
 public class AdjustScore : MonoBehaviour
 {
-    public static AdjustScore instance;
+    // public static AdjustScore instance;
 
-    void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
+    // void Awake()
+    // {
+    //     if (instance == null)
+    //         instance = this;
+    //     else if (instance != this)
+    //         Destroy(gameObject);
+    // }
 
 
-    [SerializeField] TextMeshProUGUI score;
+    TextMeshProUGUI score;
 
     
     void Start()
     {
-        score = GameObject.Find("age count").GetComponent<TextMeshProUGUI>();
-        
+        score = GameObject.Find("age count").GetComponent<TextMeshProUGUI>();        
     }
 
     void OnTriggerEnter(Collider col)
@@ -35,7 +34,8 @@ public class AdjustScore : MonoBehaviour
             if (gameObject.name == "a bad food")
                 adjustment *= -1;
 
-            ChangeScore(adjustment);                        
+            // GameManager.instance.AdjustingScore(adjustment);
+            ChangeScore(adjustment);
         }
     }
     

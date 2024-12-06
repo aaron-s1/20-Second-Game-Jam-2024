@@ -8,13 +8,17 @@ public class StartGame : MonoBehaviour
     [SerializeField] GameObject gameExplanationUIs;
     [SerializeField] GameObject startButton;
     [SerializeField] GameObject ageCountUI;
+    [SerializeField] GameObject secondsCountUI;
 
     public void BeginGame()
     {
         gameExplanationUIs.SetActive(false);
         startButton.SetActive(false);
         ageCountUI.SetActive(true);
-        player.SetActive(true);        
+        secondsCountUI.SetActive(true);
+        player.SetActive(true);
         StartCoroutine(player.GetComponent<BobFacesPlayer>().StareAtPlayer());
+
+        
     }    
 }

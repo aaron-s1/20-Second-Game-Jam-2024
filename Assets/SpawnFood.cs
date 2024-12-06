@@ -6,44 +6,72 @@ using UnityEngine;
 
 public class SpawnFood : MonoBehaviour
 {
+    float spawnRate = 1.5f;
     [SerializeField] GameObject baseFoodPrefab;
     [SerializeField] List<Sprite> badFoodSprites;
     [SerializeField] List<Sprite> goodFoodSprites;
 
-    private bool badFoodTime = true; // start with bad food
+    private bool badFoodTime = true; // start with a bad food
 
     // void Start() =>
-        // StartSpawns(2f);
+        // StartSpawns();
 
-    public void StartSpawns(float rate = 2f) => 
-        InvokeRepeating("Spawn", 0, rate);
+    public void StartSpawns() =>
+        InvokeRepeating("Spawn", 0, spawnRate);
 
 
-    public void Spawn()
+    void Spawn()
     {
-        List<Sprite> spriteListToUse = badFoodTime ? badFoodSprites : goodFoodSprites;
+        if (!GameManager.instance.spawnsAllowed)
+        {
+            CancelInvoke("Spawn");
+            return;
+        }
 
-        GameObject spawnedFood = Instantiate(baseFoodPrefab, transform.position, Quaternion.identity);
-        Sprite spriteToUse = GetRandomSprite(spriteListToUse, spawnedFood);
+        List<Sprite> spriteListToUse;
+            
+        if (badFoodTime)
+            spriteListToUse = badFoodSprites;
+        else spriteListToUse = goodFoodSprites;
 
-        spawnedFood.GetComponent<SpriteRenderer>().sprite = spriteToUse;
-        
+        Vector3 spawnPosition = GetRandomSpawnPosition(0.3f);
+        GameObject spawnedFood = Instantiate(baseFoodPrefab, spawnPosition, Quaternion.identity);
+        RandomizeSprite(spawnedFood, spriteListToUse);
+
+        spawnedFood.SetActive(true);
+            
         badFoodTime = !badFoodTime;
     }
 
 
 
-    Sprite GetRandomSprite(List<Sprite> spriteList, GameObject spawnedFood)
+    Vector3 GetRandomSpawnPosition(float globalDeadZone)
+    {
+        Vector2 screenMin = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)); // bottom left
+        Vector2 screenMax = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)); // top right
+
+        // Calculate the dead zone margins
+        float xMin = Mathf.Lerp(screenMin.x, screenMax.x, globalDeadZone);
+        float xMax = Mathf.Lerp(screenMin.x, screenMax.x, (1f - globalDeadZone));
+        float yMin = Mathf.Lerp(screenMin.y, screenMax.y, globalDeadZone);
+        float yMax = Mathf.Lerp(screenMin.y, screenMax.y, (1f - globalDeadZone));
+
+        // generate a random position within the allowed  area
+        float randomX = Random.Range(xMin, xMax);
+        float randomY = Random.Range(yMin, yMax);
+
+        return new Vector3(randomX, randomY, 0);
+    }
+
+
+    void RandomizeSprite(GameObject food, List<Sprite> spriteList)
     {
         if (spriteList == badFoodSprites)
-            spawnedFood.name = "a bad food";
+            food.name = "a bad food";
         else
-            spawnedFood.name = "a good food";
+            food.name = "a good food";
       
-        if (spriteList.Count == 0)
-            return null;
-
-        int randomIndex = Random.Range(0, spriteList.Count);
-        return spriteList[randomIndex];
+        int randomIndex = Random.Range(0, spriteList.Count);        
+        food.GetComponent<SpriteRenderer>().sprite = spriteList[randomIndex];
     }
 }

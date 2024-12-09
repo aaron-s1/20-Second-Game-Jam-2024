@@ -15,6 +15,8 @@ public class SpawnFood : MonoBehaviour
 
     private bool badFoodTime = true; // start with a bad food
 
+    public bool currentTargetForBob;
+
     void Awake()
     {
         if (instance == null)
@@ -47,6 +49,10 @@ public class SpawnFood : MonoBehaviour
         RandomizeSprite(spawnedFood, spriteListToUse);
 
         spawnedFood.SetActive(true);
+
+        if (badFoodTime)
+            BobMovement.instance.badFoodList.Add(spawnedFood);
+        // currentTargetForBob = spawnedFood;
             
         badFoodTime = !badFoodTime;
     }

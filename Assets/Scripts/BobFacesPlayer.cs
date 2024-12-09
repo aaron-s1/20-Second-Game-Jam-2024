@@ -19,6 +19,8 @@ public class BobFacesPlayer : MonoBehaviour
 
     public Transform testFood;
 
+    
+
     void Awake()
     {
         anim = GetComponent<Animator>();

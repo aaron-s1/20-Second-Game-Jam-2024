@@ -38,19 +38,21 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         finalAge = ReturnScore();
+        score.text = ReturnScore().ToString();
     }
 
     IEnumerator SecondsCounter(float secondsPassed)
     {
-        float timeCount = 0;
-        while (timeCount < 20f)
+        if (int.Parse(secondsPassedDisplay.text) >= 20)
         {
-            timeCount += Time.deltaTime;
-            secondsPassedDisplay.text = timeCount.ToString("F2");
+            EndGame();
+            yield break;
         }
+        
+        yield return new WaitForSeconds(1f);
+        secondsPassedDisplay.text = (int.Parse(secondsPassedDisplay.text) - 1).ToString();
 
-        EndGame();
-        yield break;
+
     }
 
 

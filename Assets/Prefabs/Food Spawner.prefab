@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8adc3b9a68c584fbdf66a484ffb90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseFoodPrefab: {fileID: 9150305173676953792, guid: 62eee90a721d9834fa55491cbea57597, type: 3}
+  spawnRate: 0.8
+  baseFoodPrefab: {fileID: 49652994048912850, guid: 02a790707f729d54586904ed5c8a02a1, type: 3}
   badFoodSprites:
   - {fileID: 21300000, guid: 3a25bc8660eecd640b18c00d7ac25d39, type: 2}
   - {fileID: 21300000, guid: b8b479e536693224d9019175b7b7b2cf, type: 2}
@@ -63,3 +64,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 80aafdc834419e448909fb3667a9b287, type: 2}
   - {fileID: 21300000, guid: c71ea3cdba2c0194685c5fc097cc8be0, type: 2}
   - {fileID: 21300000, guid: 400fb66587bb62548b70ea3ae67cc706, type: 2}
+  allFoodSpawns: []
+  currentTargetForBob: 0
+  globalSpawnDeadZone: 0.15

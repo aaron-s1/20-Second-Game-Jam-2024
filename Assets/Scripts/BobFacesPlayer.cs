@@ -56,6 +56,7 @@ public class BobFacesPlayer : MonoBehaviour
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(MoveObj(jaw, originalJawPos, 1f, true));
 
+        GameManager.instance.StartingGame();
         SpawnFood.instance.StartSpawns();
     }
     

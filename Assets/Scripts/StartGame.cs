@@ -4,11 +4,27 @@ using UnityEngine;
 
 public class StartGame : MonoBehaviour
 {
+    public static StartGame instance;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
+    }       
+
     [SerializeField] GameObject player;
     [SerializeField] GameObject gameExplanationUIs;
     [SerializeField] GameObject startButton;
     [SerializeField] GameObject ageCountUI;
-    [SerializeField] GameObject secondsCountUI;
+    public GameObject secondsCountUI;
 
     public void BeginGame()
     {

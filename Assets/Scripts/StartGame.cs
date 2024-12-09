@@ -6,6 +6,13 @@ public class StartGame : MonoBehaviour
 {
     public static StartGame instance;
 
+    [SerializeField] GameObject player;
+    [SerializeField] GameObject gameExplanationUIs;
+    [SerializeField] GameObject startButton;
+    [SerializeField] GameObject ageCountUI;
+    public GameObject secondsCountUI;
+
+    
     void Awake()
     {
         if (instance == null)
@@ -14,17 +21,6 @@ public class StartGame : MonoBehaviour
             Destroy(gameObject);
     }
 
-    void OnDestroy()
-    {
-        if (instance == this)
-            instance = null;
-    }       
-
-    [SerializeField] GameObject player;
-    [SerializeField] GameObject gameExplanationUIs;
-    [SerializeField] GameObject startButton;
-    [SerializeField] GameObject ageCountUI;
-    public GameObject secondsCountUI;
 
     public void BeginGame()
     {
@@ -34,5 +30,12 @@ public class StartGame : MonoBehaviour
         secondsCountUI.SetActive(true);
         player.SetActive(true);
         StartCoroutine(player.GetComponent<BobFacesPlayer>().StareAtPlayer());
+    }
+    
+
+    void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
     }    
 }

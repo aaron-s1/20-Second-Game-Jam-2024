@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class BobRotates : MonoBehaviour
 {
-    [SerializeField] float rotateSpeed;
+    public float rotateSpeed;
 
-    void Start()
-    {
-
-    }
-
-    void FixedUpdate()
-    {
+    void FixedUpdate() =>
         transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
-    }
 }

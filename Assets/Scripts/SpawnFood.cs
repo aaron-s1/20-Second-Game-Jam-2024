@@ -14,9 +14,10 @@ public class SpawnFood : MonoBehaviour
     [SerializeField] List<Sprite> goodFoodSprites;
     [SerializeField] List<GameObject> allFoodSpawns;
 
-    private bool badFoodTime = true; // start with a bad food
+    [SerializeField] float globalSpawnDeadZone;
 
-    public bool currentTargetForBob;
+    bool badFoodTime = true;
+
 
     void Awake()
     {
@@ -27,9 +28,24 @@ public class SpawnFood : MonoBehaviour
     }
 
 
-    public void StartSpawns() =>
+    public void StartSpawns() 
+    {
+        ForceAGoodFoodSpawn(); ForceAGoodFoodSpawn(); ForceAGoodFoodSpawn(); ForceAGoodFoodSpawn(); ForceAGoodFoodSpawn();
         InvokeRepeating("Spawn", 0, spawnRate);
+    }
 
+
+    public void ForceAGoodFoodSpawn()
+    {
+        List<Sprite> spriteListToUse;
+        spriteListToUse = goodFoodSprites;
+        Vector3 spawnPosition = GetRandomSpawnPosition(globalSpawnDeadZone);
+        GameObject spawnedFood = Instantiate(baseFoodPrefab, spawnPosition, Quaternion.identity);
+        RandomizeSprite(spawnedFood, spriteListToUse);
+
+        spawnedFood.SetActive(true);    
+        allFoodSpawns.Add(spawnedFood);
+    }
 
     void Spawn()
     {        
@@ -40,9 +56,7 @@ public class SpawnFood : MonoBehaviour
             foreach (GameObject a_food in allFoodSpawns)
             {
                 if (a_food.activeInHierarchy)
-                {
                     a_food.SetActive(false);
-                }
             }
             return;
         }
@@ -65,9 +79,6 @@ public class SpawnFood : MonoBehaviour
         allFoodSpawns.Add(spawnedFood);
         badFoodTime = !badFoodTime;
     }
-
-    [SerializeField] float globalSpawnDeadZone;
-
 
 
     Vector3 GetRandomSpawnPosition(float globalDeadZone)
@@ -99,6 +110,7 @@ public class SpawnFood : MonoBehaviour
         int randomIndex = Random.Range(0, spriteList.Count);        
         food.GetComponent<SpriteRenderer>().sprite = spriteList[randomIndex];
     }
+
 
     void OnDestroy()
     {

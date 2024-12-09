@@ -6,8 +6,11 @@ Source: (https://assetstore.unity.com/packages/3d/characters/humanoids/hijacker-
 "Living Birds" by 'Dinopunch'  
 Source: (https://assetstore.unity.com/packages/3d/characters/animals/birds/living-birds-15649)  
 
-"Simple Particles FX : Toon Effects" by Indian Ocean Assets  
+"Simple Particles FX : Toon Effects" by 'Indian Ocean Assets'  
 Source: (https://assetstore.unity.com/packages/vfx/particles/simple-particles-fx-toon-effects-244171)  
+
+"Fantasy Skybox FREE" by 'Render Knight'  
+Source: (https://assetstore.unity.com/packages/2d/textures-materials/sky/fantasy-skybox-free-18353)
 
 
 Song made using Suno.

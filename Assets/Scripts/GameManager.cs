@@ -10,13 +10,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public bool spawnsAllowed = true;
-
-    float finalAgeNumber;
+    [SerializeField] GameObject restartScreen;    
     [SerializeField] TextMeshProUGUI score;
-
     [SerializeField] TextMeshProUGUI secondsPassedDisplay;
-    
+
+    public bool spawnsAllowed = true;
+    public bool gameIsOver;
+
 
     void Awake()
     {
@@ -28,41 +28,29 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
     }
-    void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }    
 
-    public void StartingGame()
-    {
-        // Debug.Log("game manager hit StartGame()");
+    #region GAME STATES.
+    public void StartingGame() =>
         StartCoroutine(SecondsCounter());
-    }
     
-    void StopGame()
-    {
 
-    }
-
-    public void ReloadGame()
-    {
+    public void ReloadGame() =>
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);        
-    }
 
-    public bool gameIsOver;
-    [SerializeField] GameObject restartScreen;
 
     void EndGame()
     {
+        BobMovement.instance.gameObject.GetComponent<BobRotates>().rotateSpeed = -90f;
         gameIsOver = true;
         BobMovement.instance.KillMovement();
 
         StartGame.instance.secondsCountUI.SetActive(false);
         restartScreen.SetActive(true);
 
-        finalAgeNumber = ReturnScore();
         score.text = ReturnScore().ToString();
     }
+    #endregion
+
 
     IEnumerator SecondsCounter()
     {
@@ -74,11 +62,8 @@ public class GameManager : MonoBehaviour
                 
         yield return new WaitForSeconds(1f);
 
-        // Debug.Log("start result = " + secondsPassedDisplay.text);
         int newSeconds = int.Parse(secondsPassedDisplay.text) - 1;
-        // Debug.Log("adjusted = " + newSeconds);
         secondsPassedDisplay.text = newSeconds.ToString();
-        // Debug.Log("end result = " + secondsPassedDisplay.text);
 
         StartCoroutine(SecondsCounter());
     }
@@ -93,13 +78,10 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // if (SpawnFood.instance == null)
-            // SpawnFood.instance = null;
-
-        // StartGame.instance = null;
-        // BobMovement.instance = null;
         if (instance == null)
             instance = this;
-        // instance = null;
-    }        
+    }
+
+    void OnDestroy() =>
+        SceneManager.sceneLoaded -= OnSceneLoaded;
 }

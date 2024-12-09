@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class BobMovement : MonoBehaviour
 {
-    public GameObject badFoodTarget; // temp public
-    public List<GameObject> badFoodList;
     public static BobMovement instance;
-    // public GameObject centreOfPlayer;
+    public float moveSpeed;
+
+    public List<GameObject> badFoodList;
+
+    GameObject badFoodTarget;
+    Coroutine flyTowardsFood;
 
     float yOffset = -3.5f; // for finding proper centre of player
 
+    bool alreadyMoving;
+
+    bool movementWasCausedByPlayer;
 
 
     void Awake()
@@ -23,34 +29,6 @@ public class BobMovement : MonoBehaviour
         badFoodList = new List<GameObject>();
     }
 
-    void OnDestroy()
-    {
-        if (instance == this)
-            instance = null;
-    }    
-
-    public bool movementCausedByPlayer;
-    // public bool playerOverridesMovement; // temp public.
-    // public bool playerLaunchedBob; // temp public.
-
-
-
-    public float moveSpeed;
-    bool alreadyMoving;
-    Coroutine flyTowardsFood;
-    Coroutine playerCausedToFlySomeDistance;
-
-    public void KillMovement()
-    {
-        moveSpeed = 0;
-
-        if (badFoodList.Count > 1)
-            StopCoroutine(flyTowardsFood);
-            // StopCoroutine(FlyTowardsBadFood(badFoodList[0], movementCausedByPlayer));
-        // StopCoroutine(PlayerCausedToFlySomeDistance());
-
-        alreadyMoving = true;
-    }
 
     void Update()
     {
@@ -74,49 +52,22 @@ public class BobMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // if (GameManager.instance.gameIsOver)
-        // {
-        //     KillMovement();
-        //     return;
-        // }
-
         if (badFoodList.Count <= 0)
             return;
 
         if (alreadyMoving)
             return;
-
-        // if mouse clicks pass....
-        // if (Input.GetMouseButtonDown(1))
-        // {
-        //     StopCoroutine(FlyTowardsBadFood(badFoodList[0], movementCausedByPlayer));     
-        //     Debug.Log("killed coroutine");       
-        //     StartCoroutine(PlayerCausedToFlySomeDistance());
-        //     // StopCoroutine(FlyTowardsFood(badFoodList[0], movementCausedByPlayer));
-        // }
-
-        // check for movement.
-
         
         if (!alreadyMoving) // explicit.
             flyTowardsFood = StartCoroutine(FlyTowardsFood(badFoodList[0], false));
 
     }
 
-    IEnumerator PlayerCausedToFlySomeDistance()
-    {
-        yield break;
-        // StopCoroutine(flyTowardsFood);
-        // alreadyMoving = true;
-        // movementCausedByPlayer = true;
-        // Debug.Log("player triggered fly distance");
-    }
-    
 
     IEnumerator FlyTowardsFood(GameObject target, bool playerCausedMovement)
     {
         alreadyMoving = true;
-        movementCausedByPlayer = playerCausedMovement;
+        movementWasCausedByPlayer = playerCausedMovement;
 
         Vector3 targetPos = new Vector3 (target.transform.position.x, target.transform.position.y + yOffset, target.transform.position.z);
         
@@ -135,28 +86,6 @@ public class BobMovement : MonoBehaviour
         StopCoroutine(flyTowardsFood);
     }
 
-    // void OnMouseDown()
-    // {
-    //     Debug.Log("mouse clicked");
-    //     Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //     RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-
-    //     if (hit.collider != null)
-    //     {
-    //         Debug.Log("mouse hit something");
-    //         GameObject clickedGoodFood = hit.collider.gameObject;
-
-    //         if (clickedGoodFood.name == "a good food")
-    //         {
-    //             Debug.Log("clicked a good food");
-    //             StopCoroutine(flyTowardsFood);
-    //             flyTowardsFood = StartCoroutine(FlyTowardsFood(clickedGoodFood, true));
-    //         }
-    //     }
-    // }    
-
-    
-
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -165,7 +94,7 @@ public class BobMovement : MonoBehaviour
             GameObject food = col.gameObject;
 
             // Can only eat good foods if moved by player.
-            if (food.name == "a good food" && movementCausedByPlayer)
+            if (food.name == "a good food" && movementWasCausedByPlayer)
             {
                 GameManager.instance.AdjustingScore(1.25f);
                 food.SetActive(false);
@@ -174,11 +103,10 @@ public class BobMovement : MonoBehaviour
             // Can only eat target bad food normally, or all bad foods if moved by player.
             if (food.name == "a bad food")
             {
-                if (food == badFoodList[0] || movementCausedByPlayer)
+                if (food == badFoodList[0] || movementWasCausedByPlayer)
                 {
                     GameManager.instance.AdjustingScore(-0.75f);
 
-                    // badFoodList.RemoveAt(badFoodList.Count - 1);
                     if (badFoodList.Contains(food))
                         badFoodList.Remove(food);
                     food.SetActive(false);                    
@@ -186,4 +114,23 @@ public class BobMovement : MonoBehaviour
             }
         }
     }
+
+
+    public void KillMovement()
+    {
+        moveSpeed = 0;
+
+        if (badFoodList.Count > 1)
+            StopCoroutine(flyTowardsFood);
+
+        alreadyMoving = true;
+    }
+
+
+    void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
+    }    
+
 }

@@ -33,7 +33,7 @@ public class BobFacesPlayer : MonoBehaviour
     public IEnumerator StareAtPlayer()
     {
         anim.enabled = false;
-        Destroy(GetComponent<BobRotates>());        
+        GetComponent<BobRotates>().rotateSpeed = 0;
         transform.eulerAngles = originalSelfRotation;
 
         targetRotation = new Vector3 (self.transform.rotation.x, self.transform.rotation.y + 70, self.transform.rotation.z);
@@ -61,13 +61,13 @@ public class BobFacesPlayer : MonoBehaviour
     }
     
 
-    public IEnumerator FacePlayer()
-    {        
-        anim.SetTrigger("face player");
+    // public IEnumerator FacePlayer()
+    // {        
+    //     anim.SetTrigger("face player");
 
-        yield return null;
-        yield break;
-    }
+    //     yield return null;
+    //     yield break;
+    // }
 
     IEnumerator RotateObj(GameObject obj, Vector3 destination, float duration, bool rotateLocal = true)
     {
